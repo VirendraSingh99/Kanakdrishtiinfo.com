@@ -269,7 +269,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { notFound } from "next/navigation";
-import { getServiceBySlug } from "../servicesData/page";
+import { getServiceBySlug } from "../serviceData";
 import ServiceDetailClient from "./ServiceDetailClient";
 
 // ── Dynamic SEO Meta Tags ─────────────────────────────────────
