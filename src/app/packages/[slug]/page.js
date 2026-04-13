@@ -1,0 +1,373 @@
+
+// import Link from "next/link";
+// import { notFound } from "next/navigation";
+// import { getPackageBySlug, getAllSlugs, packages } from "../packageData";
+// import PricingPlans from "../PricingPlans";
+
+// export async function generateStaticParams() {
+//   return getAllSlugs();
+// }
+
+// export async function generateMetadata({ params }) {
+//   const { slug } = await params;
+//   const pkg = getPackageBySlug(slug);
+//   if (!pkg) return {};
+//   return {
+//     title: pkg.metaTitle,
+//     description: pkg.metaDescription,
+//   };
+// }
+
+// // ─── Check Icon ───────────────────────────────────────────────────────────────
+// const CheckIcon = () => (
+//   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 20 20" fill="none">
+//     <circle cx="10" cy="10" r="10" fill="#49BCE3" opacity="0.15" />
+//     <path
+//       d="M6 10.5l3 3 5-5.5"
+//       stroke="#49BCE3"
+//       strokeWidth="2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     />
+//   </svg>
+// );
+
+// // ─── Related Card ─────────────────────────────────────────────────────────────
+// const RelatedCard = ({ pkg }) => (
+//   <Link
+//     href={`/packages/${pkg.slug}`}
+//     className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 overflow-hidden flex flex-col"
+//   >
+//     <div className="relative overflow-hidden h-40">
+//       <img
+//         src={pkg.image}
+//         alt={pkg.title}
+//         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+//       />
+//       <span className="absolute top-3 left-3 text-xs font-bold px-3 py-1 rounded-full text-white bg-[#0f2a5f] shadow">
+//         {pkg.tag}
+//       </span>
+//     </div>
+//     <div className="h-[3px] bg-gradient-to-r from-[#0f2a5f] to-[#49BCE3]" />
+//     <div className="p-4 flex-1 flex flex-col">
+//       <h4 className="text-[13px] font-bold text-[#0f2a5f] group-hover:text-[#49BCE3] transition-colors mb-2 leading-snug">
+//         {pkg.title}
+//       </h4>
+//       <p className="text-gray-500 text-xs leading-relaxed flex-1 line-clamp-2">
+//         {pkg.shortDesc}
+//       </p>
+//       <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#49BCE3]">
+//         View Package
+//         <svg
+//           className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"
+//           fill="none"
+//           stroke="currentColor"
+//           strokeWidth="2.5"
+//           viewBox="0 0 24 24"
+//         >
+//           <path
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//             d="M13 7l5 5m0 0l-5 5m5-5H6"
+//           />
+//         </svg>
+//       </span>
+//     </div>
+//   </Link>
+// );
+
+// // ─── Divider ─────────────────────────────────────────────────────────────────
+// const Divider = () => (
+//   <div className="flex items-center gap-1 mb-6">
+//     <div className="w-10 h-1 rounded-full bg-[#0f2a5f]" />
+//     <div className="w-10 h-1 rounded-full bg-[#49BCE3]" />
+//     <div className="w-5 h-1 rounded-full bg-[#49BCE3]/30" />
+//   </div>
+// );
+
+// // ─── Main Page ────────────────────────────────────────────────────────────────
+// const PackageDetailPage = async ({ params }) => {
+//   const { slug } = await params;
+//   const pkg = getPackageBySlug(slug);
+//   if (!pkg) notFound();
+
+//   const related = packages.filter((p) => p.slug !== pkg.slug).slice(0, 3);
+
+//   return (
+//     <div className="font-sans">
+//       {/* ══════════ HERO — Pure gradient, no image ══════════ */}
+//       <section className="relative w-full min-h-[55vh] sm:min-h-[60vh] flex items-center justify-center overflow-hidden">
+//         <div className="absolute inset-0 bg-gradient-to-r from-[#0f2a5f] via-[#13387a] to-[#0f2a5f]" />
+//         <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-[#49BCE3] opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2" />
+//         <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-[#49BCE3] opacity-10 blur-3xl translate-x-1/3 translate-y-1/3" />
+//         <div
+//           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full opacity-10 blur-3xl"
+//           style={{ background: pkg.color }}
+//         />
+//         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white py-16">
+//           <span
+//             className="inline-block text-xs font-bold px-4 py-1.5 rounded-full text-white mb-5"
+//             style={{ background: pkg.color }}
+//           >
+//             {/* {pkg.tag} */}
+//           </span>
+//           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-5">
+//             {pkg.title}
+//           </h1>
+//           <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+//             {pkg.shortDesc}
+//           </p>
+//           <Link
+//             href="/contact"
+//             className="inline-block bg-[#49BCE3] hover:bg-[#3aa6cc] text-white px-8 py-4 rounded-lg font-semibold transition-all shadow-lg shadow-[#49BCE3]/20 hover:shadow-[#49BCE3]/40 hover:scale-105 active:scale-95"
+//           >
+//             Get Custom Quote
+//           </Link>
+//         </div>
+//       </section>
+
+//       {/* ══════════ WHAT'S INCLUDED ══════════ */}
+//       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-7xl mx-auto space-y-16">
+//           <div>
+//             <span className="inline-block text-xs font-bold text-[#49BCE3] uppercase tracking-[0.2em] mb-3">
+//               Deliverables
+//             </span>
+//             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f2a5f] mb-4">
+//               {"What's Included in This Package"}
+//             </h2>
+//             <Divider />
+//             <p className="text-gray-600 text-base leading-relaxed mb-8">
+//               {pkg.description}
+//             </p>
+//             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+//               {pkg.features.map((feature, i) => (
+//                 <li
+//                   key={i}
+//                   className="flex items-start gap-3 bg-[#f0f7fb] rounded-xl p-4 border border-[#49BCE3]/10"
+//                 >
+//                   <CheckIcon />
+//                   <span className="text-sm text-gray-700 leading-relaxed">
+//                     {feature}
+//                   </span>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* ══════════ DYNAMIC SEO SECTION (pkg.seoSection) ══════════ */}
+//       <section className="py-16 px-4 bg-white">
+//         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+//           {/* LEFT IMAGE */}
+//           <div>
+//             <img
+//               src={pkg.seoSection.image}
+//               alt={pkg.seoSection.title}
+//               className="w-full rounded-xl shadow-md"
+//             />
+//           </div>
+//           {/* RIGHT CONTENT */}
+//           <div>
+//             <h2 className="text-3xl md:text-4xl font-bold mb-4">
+//               {pkg.seoSection.title}
+//             </h2>
+//             {pkg.seoSection.description.map((item, i) => (
+//               <p key={i} className="text-gray-600 mb-3">
+//                 {item}
+//               </p>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* ══════════ SEO RICH CONTENT ══════════ */}
+//       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+//         <div className="max-w-7xl mx-auto space-y-14">
+//           {pkg.seoContent.map((section, i) => (
+//             <article key={i}>
+//               <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f2a5f] mb-4">
+//                 {section.heading}
+//               </h2>
+//               <Divider />
+//               {section.body.split("\n\n").map((para, j) => (
+//                 <p
+//                   key={j}
+//                   className="text-gray-600 text-base leading-[1.9] mb-4"
+//                 >
+//                   {para}
+//                 </p>
+//               ))}
+//             </article>
+//           ))}
+//         </div>
+//       </section>
+
+//       {/* ══════════ PRICING PLANS ══════════ */}
+//       <PricingPlans />
+//       {/* ══════════ RELATED PACKAGES ══════════ */}
+//       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="text-center mb-10">
+//             <span className="inline-block text-xs font-bold text-[#49BCE3] uppercase tracking-[0.2em] mb-3">
+//               Explore More
+//             </span>
+//             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f2a5f]">
+//               Related Packages
+//             </h2>
+//             <div className="mt-4 mx-auto flex items-center justify-center gap-1">
+//               <div className="w-10 h-1 rounded-full bg-[#0f2a5f]" />
+//               <div className="w-10 h-1 rounded-full bg-[#49BCE3]" />
+//               <div className="w-5 h-1 rounded-full bg-[#49BCE3]/30" />
+//             </div>
+//           </div>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//             {related.map((p) => (
+//               <RelatedCard key={p.id} pkg={p} />
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* ══════════ BOTTOM CTA ══════════ */}
+//       <section className="bg-gradient-to-r from-[#0f2a5f] via-[#13387a] to-[#0f2a5f] py-14 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-4xl mx-auto text-center text-white">
+//           <h2 className="text-2xl sm:text-3xl font-extrabold mb-4">
+//             Not Sure Which Package Is Right for You?
+//           </h2>
+//           <p className="text-gray-300 text-base mb-8 max-w-xl mx-auto">
+//             Our team will analyse your business and recommend the perfect
+//             solution — completely free.
+//           </p>
+//           <Link
+//             href="/contact"
+//             className="inline-block bg-[#49BCE3] hover:bg-[#3aa6cc] text-white px-10 py-4 rounded-lg font-semibold transition-all shadow-lg hover:shadow-[#49BCE3]/30 hover:scale-105 active:scale-95"
+//           >
+//             Book a Free Consultation
+//           </Link>
+//         </div>
+//       </section>
+
+//       {/* ══════════ FAQs ══════════ */}
+//       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+//         <div className="max-w-4xl mx-auto">
+//           <span className="inline-block text-xs font-bold text-[#49BCE3] uppercase tracking-[0.2em] mb-3">
+//             FAQs
+//           </span>
+//           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f2a5f] mb-4">
+//             Frequently Asked Questions
+//           </h2>
+//           <Divider />
+//           <div className="space-y-4">
+//             {pkg.faqs.map((faq, i) => (
+//               <div
+//                 key={i}
+//                 className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm"
+//               >
+//                 <div className="bg-[#f0f7fb] px-6 py-4 flex items-start gap-3">
+//                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0f2a5f] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+//                     Q
+//                   </span>
+//                   <p className="font-semibold text-[#0f2a5f] text-sm sm:text-base">
+//                     {faq.q}
+//                   </p>
+//                 </div>
+//                 <div className="bg-white px-6 py-4 flex items-start gap-3">
+//                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#49BCE3]/20 text-[#49BCE3] text-xs font-bold flex items-center justify-center mt-0.5">
+//                     A
+//                   </span>
+//                   <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+//                     {faq.a}
+//                   </p>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// };
+
+// export default PackageDetailPage;
+
+import { notFound } from "next/navigation";
+import { getPackageBySlug, getAllSlugs } from "../packageData"; // adjust path as needed
+import PackageDetailClient from "./PackageDetailClient";
+
+// ── Dynamic SEO Meta Tags ─────────────────────────────────────
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const pkg = getPackageBySlug(slug);
+
+  if (!pkg) {
+    return {
+      title: "Package Not Found",
+      description: "The requested package page could not be found.",
+    };
+  }
+
+  return {
+    title: pkg.metaTitle,
+    description: pkg.metaDescription,
+    keywords: pkg.seoKeywords,
+    alternates: {
+      canonical: pkg.canonical,
+    },
+    openGraph: {
+      title: pkg.openGraph.title,
+      description: pkg.openGraph.description,
+      url: pkg.openGraph.url,
+      type: pkg.openGraph.type,
+      siteName: pkg.openGraph.siteName,
+      images: [
+        {
+          url: pkg.openGraph.image,
+          width: 1200,
+          height: 630,
+          alt: pkg.openGraph.title,
+        },
+      ],
+    },
+    twitter: {
+      card: pkg.twitterCard.card,
+      title: pkg.twitterCard.title,
+      description: pkg.twitterCard.description,
+      images: [pkg.twitterCard.image],
+      site: pkg.twitterCard.site,
+    },
+  };
+}
+
+// ── Static Paths ──────────────────────────────────────────────
+export async function generateStaticParams() {
+  return getAllSlugs();
+}
+
+// ── JSON-LD Schema ────────────────────────────────────────────
+function PackageSchema({ schema }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+// ── Main Page Component ───────────────────────────────────────
+export default async function PackageDetailPage({ params }) {
+  const { slug } = await params;
+  const pkg = getPackageBySlug(slug);
+
+  if (!pkg) {
+    notFound();
+  }
+
+  return (
+    <>
+      <PackageSchema schema={pkg.schema} />
+      <PackageDetailClient pkg={pkg} />
+    </>
+  );
+}
